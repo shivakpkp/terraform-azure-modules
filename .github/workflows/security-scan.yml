@@ -1,4 +1,4 @@
-name: terraform-validate
+name: terraform-security-scan
 description: Validate Terraform configuration
 on:
     workflow_dispatch:
