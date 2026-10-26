@@ -34,6 +34,9 @@ jobs:
         name: TFLint-TFsec
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout repository
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+              
             - name: TFLint-TFSec
               uses: ./.github/actions/terraform-security
               with:
