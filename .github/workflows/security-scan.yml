@@ -1,0 +1,33 @@
+name: terraform-validate
+description: Validate Terraform configuration
+on:
+    workflow_dispatch:
+    pull_request:
+        paths:
+            - '.github/**'
+        branches:
+            - prod
+
+env:
+  TF_PLUGIN_CACHE_DIR: ${{ github.workspace }}/.terraform-plugin-cache
+
+concurrency:
+    group: terraform-validate-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+
+    Security:
+        name: Security Scan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+
+            - name: Security Scan
+              uses: ./.github/actions/terraform-secret
+              with:
+                working-directory: .
+                terraform-version: "1.5.7"
+                scan-directory: .
+                
