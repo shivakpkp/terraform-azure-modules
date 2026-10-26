@@ -1,0 +1,33 @@
+name: Terraform Security Scan
+description: Tflint and tfsec, trivy config
+
+inputs:
+  working_directory:
+    description: Terraform Environment Folder
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: TFLint
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        tflint --init || true
+        tflint --format compact || echo "TFLint reported issues (non-blocking)"
+
+    - name: tfsec
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        tfsec . --format lovely --soft-fail || echo "tfsec reported issues (non-blocking)"
+
+    - name: Trivy config
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        trivy config \
+          --severity CRITICAL,HIGH,MEDIUM \
+          --exit-code 0 \
+          --format table \
+          . || echo "Trivy reported issues (non-blocking)"
