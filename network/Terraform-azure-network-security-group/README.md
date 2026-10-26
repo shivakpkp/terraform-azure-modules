@@ -10,11 +10,11 @@ Creates Azure Network Security Groups (NSGs) with inline security rules, common 
 
 ## Usage
 
-This example assumes the module is stored at `./modules/network-security-group` relative to your root module. Adjust `source` to its actual location.
+This example loads the module from the `prod` branch of this repository. The directory name is case-sensitive.
 
 ```hcl
 module "network_security_group" {
-  source = "./modules/network-security-group"
+  source = "git::https://github.com/shivakpkp/terraform-azure-modules.git//network/Terraform-azure-network-security-group?ref=prod"
 
   tags = {
     Environment = "dev"
