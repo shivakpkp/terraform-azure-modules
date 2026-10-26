@@ -1,9 +1,10 @@
 name: Terraform Security Scan
+
 description: Run TFLint, tfsec, and Trivy configuration scans
 
 inputs:
   working_directory:
-    description: Terraform directory to scan
+    description: Terraform Environment Folder
     required: true
 
 runs:
@@ -36,3 +37,4 @@ runs:
         severity: CRITICAL,HIGH,MEDIUM
         exit-code: "0"
         format: table
+
