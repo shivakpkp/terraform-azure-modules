@@ -12,7 +12,7 @@ Creates Azure Private DNS zones using a map of configurations. Supports shared t
 
 ```hcl
 module "private_dns" {
-  source = "./modules/private-dns"
+  source = "git::https://github.com/shivakpkp/terraform-azure-modules.git//network/terraform-azure-private-dns?ref=prod"
 
   private_dns = {
     blob = {
@@ -37,7 +37,7 @@ module "private_dns" {
 }
 ```
 
-Replace `source` with the path to this module.
+The source loads this module from the `prod` branch of this repository.
 
 Keep map keys such as `blob` and `sql` stable because Terraform uses them to identify resource instances in state.
 
@@ -54,7 +54,7 @@ Each object in `private_dns` supports:
 |-----------|------|----------|---------|-------------|
 | `name` | `string` | Yes | — | Private DNS zone name. |
 | `resource_group_name` | `string` | Yes | — | Name of the existing resource group. |
-| `tags` | `map(string)` | No | `{}` | Zone-specific tags. Override shared tags with matching keys. |
+| `tags` | `map(string)` | No | `null` | Zone-specific tags. Override shared tags with matching keys. |
 
 Zone names and resource group names must contain at least one non-whitespace character. Azure validates the remaining naming requirements.
 
@@ -62,7 +62,7 @@ Zone names and resource group names must contain at least one non-whitespace cha
 
 | Name | Description |
 |------|-------------|
-| `private_dns_zone` | Map of created zones containing `id`, `name`, and `resource_group_name`, keyed by the input identifiers. |
+| `private_dns_zone` | Map of created zones containing `id` and `name`, keyed by the input identifiers. |
 
 ### Access a zone ID
 
